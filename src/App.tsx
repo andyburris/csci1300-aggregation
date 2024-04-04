@@ -12,8 +12,12 @@ import { Bookshelf } from './components/Bookshelf';
 function App() {
 	const [searchTerm, setSearchTerm] = useState("");
 	const debouncedSearchTerm = useDebouncedValue(searchTerm, 400);
-	useEffect(() => console.log(`search term changed to ${debouncedSearchTerm}`), [debouncedSearchTerm]);
-	const discoverPromise = useMemo(() => searchBooks(debouncedSearchTerm), [debouncedSearchTerm]);
+    const [searchedBooks, setSearchedBooks] = useState<Book[] | null>([]);
+    useEffect(() => { 
+        setSearchedBooks(null)
+        searchBooks(debouncedSearchTerm).then((books) => setSearchedBooks(books))
+    }, [debouncedSearchTerm]);
+
 
 	const [shelf, setShelf] = React.useState<Map<Book, ShelfLocation>>(new Map());
 
@@ -48,8 +52,11 @@ function App() {
 				<Tabs.Content value="discover" className="py-4">
 					<div className="flex flex-col gap-4">
 						<DiscoveryList 
+							books={searchedBooks}
+							searchTerm={searchTerm}
 							currentShelf={shelf}
 							onAddToShelf={updateShelf}
+							onSearch={setSearchTerm}
 							/>
 					</div>
 				</Tabs.Content>

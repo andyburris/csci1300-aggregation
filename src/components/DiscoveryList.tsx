@@ -8,17 +8,15 @@ import { ArrowsDownUp, BookOpenText, Calendar, ChartLineUp, FunnelSimple, TextAa
 import * as Dropdown from "@radix-ui/react-dropdown-menu"
 import { DropdownContent, DropdownItem } from "./Dropdown";
 
+export interface DiscoveryListProps {
+    books: Book[] | null;
+    searchTerm: string;
+    currentShelf: Map<Book, ShelfLocation>;
+    onAddToShelf: (book: Book, location: ShelfLocation | null) => void;
+    onSearch: (term: string) => void;
+}
 
-
-export function DiscoveryList({ currentShelf, onAddToShelf }: { currentShelf: Map<Book, ShelfLocation>, onAddToShelf: (book: Book, location: ShelfLocation | null) => void }){
-    const [searchTerm, setSearchTerm] = useState("");
-    const debouncedSearchTerm = useDebouncedValue(searchTerm, 400);
-
-    const [books, setBooks] = useState<Book[] | null>([]);
-    useEffect(() => { 
-        setBooks(null)
-        searchBooks(debouncedSearchTerm).then((books) => setBooks(books))
-    }, [debouncedSearchTerm]);
+export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, onSearch }: DiscoveryListProps){
 
     const allSubjects = books?.flatMap((book) => book.subject) ?? [];
     const popularSubjects = allSubjects.reduce((acc, subject) => {
@@ -47,7 +45,7 @@ export function DiscoveryList({ currentShelf, onAddToShelf }: { currentShelf: Ma
                 placeholder="Search for books" 
                 className="w-full shadow-outset p-3 rounded-xl"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => onSearch(e.target.value)}
             />        
             <div className="flex items-center flex-wrap justify-between">
                 <Dropdown.Root>

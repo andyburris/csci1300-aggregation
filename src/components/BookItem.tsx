@@ -17,7 +17,7 @@ export function BookItem({ book, shelfLocation, onAddToShelf }: { book: Book, sh
             </div>
             <div className="flex flex-shrink-0">
                 { shelfLocation !== null &&
-                    <Button onClick={() => onAddToShelf(null)}>
+                    <Button onClick={() => onAddToShelf(null)} aria-label="Remove from bookshelf">
                         <MinusCircle/>
                     </Button>
                 }
