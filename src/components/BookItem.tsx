@@ -14,7 +14,9 @@ export function BookItem({ book, shelfLocation, onAddToShelf }: { book: Book, sh
             <div className="flex flex-col flex-grow min-h-14 justify-center">
                 <p className="font-semibold">{book.title}</p>
                 <p className="text-neutral-500">{book.author}</p>
-                <p className="text-sm text-neutral-500">{book.year} • {(book.subject[0] ?? "Unknown") + (book.subject.length > 1 ? ` +${book.subject.length - 1}` : "")}</p>
+                <p className="text-sm text-neutral-500">
+                    {book.year} • {(book.subject[0] ?? "Unknown") + (book.subject.length > 1 ? ` +${book.subject.length - 1}` : "")} • {`${book.ebooks} ebook${book.ebooks === 1 ? "" : "s"}`}
+                </p>
             </div>
             <div className="flex flex-shrink-0">
                 { shelfLocation !== null &&
@@ -22,44 +24,50 @@ export function BookItem({ book, shelfLocation, onAddToShelf }: { book: Book, sh
                         <MinusCircle/>
                     </Button>
                 }
-                <Dropdown.Root>
-                    <Dropdown.Trigger asChild>
-                        <Button aria-label="Add to bookshelf">
-                            <ListHeart/>
-                        </Button>
-                    </Dropdown.Trigger>
-                    <DropdownContent 
-                        align="end" 
-                        onKeyDown={(e) => {
-                            if(e.key === "A") onAddToShelf(ShelfLocation.Read)
-                            if(e.key === "R") onAddToShelf(ShelfLocation.Reading)
-                            if(e.key === "T") onAddToShelf(ShelfLocation.ToRead)
-                        }}
-                    >
-                        <DropdownItem 
-                            onSelect={() => onAddToShelf(ShelfLocation.Reading)}
-                            isSelected={shelfLocation === ShelfLocation.Reading}
-                            icon={<BookOpen/>}
-                            text="Reading"
-                            shortcut="R"
-                            />
-                        <DropdownItem 
-                            onSelect={() => onAddToShelf(ShelfLocation.ToRead)}
-                            isSelected={shelfLocation === ShelfLocation.ToRead}
-                            icon={<Bookmark/>}
-                            text="To Read"
-                            shortcut="T"
-                            />
-                        <DropdownItem 
-                            onSelect={() => onAddToShelf(ShelfLocation.Read)}
-                            isSelected={shelfLocation === ShelfLocation.Read}
-                            icon={<Books/>}
-                            text="Already Read"
-                            shortcut="A"
-                            />
-                    </DropdownContent>
-                </Dropdown.Root>
             </div>
+            <BookItemDropdown shelfLocation={shelfLocation} onAddToShelf={onAddToShelf}/>
         </div>
+    )
+}
+
+function BookItemDropdown({ shelfLocation, onAddToShelf }: { shelfLocation: ShelfLocation | null, onAddToShelf: (location: ShelfLocation | null) => void }) {
+    return (
+        <Dropdown.Root>
+        <Dropdown.Trigger asChild>
+            <Button aria-label="Add to bookshelf">
+                <ListHeart/>
+            </Button>
+        </Dropdown.Trigger>
+        <DropdownContent 
+            align="end" 
+            onKeyDown={(e) => {
+                if(e.key === "A") onAddToShelf(ShelfLocation.Read)
+                if(e.key === "R") onAddToShelf(ShelfLocation.Reading)
+                if(e.key === "T") onAddToShelf(ShelfLocation.ToRead)
+            }}
+        >
+            <DropdownItem 
+                onSelect={() => onAddToShelf(ShelfLocation.Reading)}
+                isSelected={shelfLocation === ShelfLocation.Reading}
+                icon={<BookOpen/>}
+                text="Reading"
+                shortcut="R"
+                />
+            <DropdownItem 
+                onSelect={() => onAddToShelf(ShelfLocation.ToRead)}
+                isSelected={shelfLocation === ShelfLocation.ToRead}
+                icon={<Bookmark/>}
+                text="To Read"
+                shortcut="T"
+                />
+            <DropdownItem 
+                onSelect={() => onAddToShelf(ShelfLocation.Read)}
+                isSelected={shelfLocation === ShelfLocation.Read}
+                icon={<Books/>}
+                text="Already Read"
+                shortcut="A"
+                />
+        </DropdownContent>
+    </Dropdown.Root>
     )
 }

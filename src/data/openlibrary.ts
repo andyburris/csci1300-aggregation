@@ -13,7 +13,7 @@ export function searchBooks(term: string): Promise<Book[]> {
                 book.first_publish_year ?? 0,
                 book.subject ?? [],
                 `https://openlibrary.org/works/${book.key}`,
-                book.ebook_count_i > 0,
+                book.ebook_count_i,
             )))
 }
 

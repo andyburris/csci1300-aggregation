@@ -7,7 +7,7 @@ export class Book{
         public year: number,
         public subject: string[],
         public link: string,
-        public ebook: boolean,
+        public ebooks: number,
     ) {}
 }
 

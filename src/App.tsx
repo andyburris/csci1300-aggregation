@@ -32,6 +32,14 @@ function App() {
 		}
 	}
 
+	const discoveryList = <DiscoveryList 
+		books={searchedBooks}
+		searchTerm={searchTerm}
+		currentShelf={shelf}
+		onAddToShelf={updateShelf}
+		onSearch={setSearchTerm}
+		/>
+
 	return (
 		<main className="max-w-3xl mx-auto">
 			<header className="flex flex-col gap-2 py-3">
@@ -43,20 +51,14 @@ function App() {
 					<p className="text-neutral-500">A super simple reading list</p>
 				</div>
 			</header>
-			<Tabs.Root defaultValue="discover">
+			<Tabs.Root defaultValue="discover" className="">
 				<Tabs.List className="flex -mx-4 overflow-x-scroll border-b border-neutral-300 pb-px">
 					<TabTrigger value="discover"><Binoculars/>Discover</TabTrigger>
 					<TabTrigger value="bookshelf"><Books/>Bookshelf <div className="text-neutral-500 bg-neutral-100 px-1 text-base rounded-full">{shelf.size}</div></TabTrigger>
 				</Tabs.List>
 				<Tabs.Content value="discover" className="py-4">
 					<div className="flex flex-col gap-4">
-						<DiscoveryList 
-							books={searchedBooks}
-							searchTerm={searchTerm}
-							currentShelf={shelf}
-							onAddToShelf={updateShelf}
-							onSearch={setSearchTerm}
-							/>
+						{discoveryList}
 					</div>
 				</Tabs.Content>
 				<Tabs.Content value="bookshelf" className="py-4">

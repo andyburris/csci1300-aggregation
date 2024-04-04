@@ -5,6 +5,7 @@ import { Book, ShelfLocation } from "../data/book";
 import { BookItem } from "./BookItem";
 import { Button } from "./Button";
 import { DropdownContent, DropdownItem } from "./Dropdown";
+import { ArrowCounterClockwise } from "@phosphor-icons/react";
 
 export interface DiscoveryListProps {
     books: Book[] | null;
@@ -28,7 +29,7 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
     const [hasEbook, setHasEbook] = useState<boolean | null>(null);
     const filteredBooks = books?.filter((book) => 
         (selectedSubjects.length === 0 || selectedSubjects.some((subject) => book.subject.includes(subject)))
-        && (hasEbook === null || book.ebook === hasEbook)
+        && (hasEbook === null || (hasEbook ? book.ebooks > 0 : book.ebooks <= 0))
     ) 
     const [sort, setSort] = useState<"Relevance" | "Title" | "Author" | "Date">("Relevance")
     const sortedBooks = filteredBooks?.toSorted((a: Book, b: Book) => {
@@ -48,7 +49,7 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
                 value={searchTerm}
                 onChange={(e) => onSearch(e.target.value)}
             />        
-            <div className="flex items-center flex-wrap justify-between">
+            <div className="flex items-center flex-wrap gap-2">
                 <Dropdown.Root>
                     <Dropdown.Trigger asChild>
                         <Button>
@@ -99,6 +100,11 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
                         <DropdownItem onSelect={() => setSort("Date")} icon={<Calendar/>} text="Release date"/>
                     </DropdownContent>
                 </Dropdown.Root>
+                { (hasEbook !== null || selectedSubjects.length > 0) && 
+                    <Button onClick={() => { setHasEbook(null); setSelectedSubjects([])}}>
+                        <ArrowCounterClockwise/> <p>Reset</p>
+                    </Button>
+                }
             </div>
         </div>
         { sortedBooks
