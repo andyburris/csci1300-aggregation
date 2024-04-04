@@ -56,7 +56,7 @@ function App() {
 					<TabTrigger value="discover"><Binoculars/>Discover</TabTrigger>
 					<TabTrigger value="bookshelf"><Books/>Bookshelf <div className="text-neutral-500 bg-neutral-100 px-1 text-base rounded-full">{shelf.size}</div></TabTrigger>
 				</Tabs.List>
-				<Tabs.Content value="discover" className="py-3">
+				<Tabs.Content value="discover" className="py-4">
 					<div className="flex flex-col gap-4">
 						{discoveryList}
 					</div>

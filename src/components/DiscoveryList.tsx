@@ -42,7 +42,7 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
 
     return (
         <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-1 -mx-2">
+        <div className="flex flex-col gap-1">
             <input 
                 placeholder="Search for books" 
                 className="w-full shadow-outset p-3 rounded-xl"
@@ -80,7 +80,7 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
                     <Dropdown.Trigger asChild>
                         <Button>
                             <BookOpenText/> 
-                            <p> {hasEbook === null ? "Ebooks" : hasEbook ? "Only ebooks" : "Without ebooks" } </p>
+                            <p><span className="text-neutral-900">{hasEbook === null ? "All" : hasEbook ? "Only" : "Without" }</span> ebooks</p>
                         </Button>
                     </Dropdown.Trigger>
                     <DropdownContent align="start">
@@ -109,6 +109,7 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
                 }
             </div>
         </div>
+        { sortedBooks && <p className="text-neutral-500">Results ({sortedBooks?.length})</p> }
         <div className="grid gap-4 grid-cols-1 xs:grid-cols-2 sm:grid-cols-3">
             { sortedBooks
                 ? sortedBooks.map((book) => <BookItem2 
