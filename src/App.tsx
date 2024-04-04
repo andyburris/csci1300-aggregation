@@ -74,9 +74,11 @@ function TabTrigger({ value, children }: { value: string, children: React.ReactN
 	return (
 		<Tabs.Trigger 
 			value={value} 
-			className="flex gap-2 items-center px-4 py-3 flex-shrink-0 text-neutral-500 data-[state=active]:text-neutral-900 hover:border-b hover:-mb-px border-neutral-500 data-[state=active]:border-b data-[state=active]:border-neutral-900 data-[state=active]:-mb-px overflow-visible transition-colors"
+			className="px-1 py-1 flex-shrink-0 text-neutral-500 group data-[state=active]:text-neutral-900 border-neutral-500 data-[state=active]:border-b data-[state=active]:border-neutral-900 data-[state=active]:-mb-px overflow-visible transition-colors"
 		>
-			{children}
+			<div className="flex gap-2 items-center px-3 py-2 group-hover:bg-neutral-100 rounded-lg">
+				{children}
+			</div>
 		</Tabs.Trigger>
 	)
 }
