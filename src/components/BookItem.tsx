@@ -35,16 +35,16 @@ export function BookItem2({ book, shelfLocation, onAddToShelf }: { book: Book, s
         <div className="flex flex-col gap-3">
             <div className={
                 "flex flex-shrink-0 -skew-y-3 relative ml-3 my-3"
-                + " after:absolute after:-top-2 after:left-0 after:w-24 after:h-2 after:bg-neutral-50 after:border-t after:border-r after:border-neutral-300 after:skew-x-[45deg] after:origin-bottom-left after:rounded-tr-lg"
+                + " after:absolute after:-top-4 after:left-0 after:w-32 after:h-4 after:bg-neutral-50 after:border-t after:border-r after:border-neutral-300 after:skew-x-[45deg] after:origin-bottom-left after:rounded-tr-lg"
             }>
-                <div className="z-10 backdrop-blur-sm absolute top-0 -left-2 w-2 h-full skew-y-[45deg] origin-bottom-right rounded-bl-lg border border-[rgba(0,0,0,.12)]"></div>
+                <div className="z-10 backdrop-blur absolute top-0 -left-4 w-4 h-full skew-y-[45deg] origin-bottom-right rounded-bl-lg border border-[rgba(0,0,0,.12)]"></div>
                 { book.image
-                    ? <img src={book.image} alt={book.title} className="absolute top-0 -left-2 w-2 h-full skew-y-[45deg] origin-bottom-right rounded-bl-lg border border-[rgba(0,0,0,.12)]"/>
-                    : <div className="absolute top-0 -left-2 w-2 h-full skew-y-[45deg] origin-bottom-right rounded-bl-lg border border-[rgba(0,0,0,.12)] bg-neutral-200"/>
+                    ? <img src={book.image} alt={book.title} className="absolute top-0 -left-4 w-4 h-full skew-y-[45deg] origin-bottom-right rounded-bl-lg border border-[rgba(0,0,0,.12)]"/>
+                    : <div className="absolute top-0 -left-4 w-4 h-full skew-y-[45deg] origin-bottom-right rounded-bl-lg border border-[rgba(0,0,0,.12)] bg-neutral-200"/>
                 }
                 { book.image 
-                    ? <img src={book.image} alt={book.title} className="w-24 h-40 object-cover rounded-br-md border border-l-0 border-[rgba(0,0,0,.12)]"/>
-                    : <div className="w-24 h-40 bg-neutral-200 rounded-br-md border border-l-0 border-[rgba(0,0,0,.12)"/>
+                    ? <img src={book.image} alt={book.title} className="w-32 h-56 object-cover rounded-br-md border border-l-0 border-[rgba(0,0,0,.12)]"/>
+                    : <div className="w-32 h-56 bg-neutral-200 rounded-br-md border border-l-0 border-[rgba(0,0,0,.12)"/>
                 }
             </div>
             <div className="flex">
