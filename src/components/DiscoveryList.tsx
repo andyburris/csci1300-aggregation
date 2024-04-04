@@ -42,14 +42,14 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
 
     return (
         <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 -mx-2">
             <input 
                 placeholder="Search for books" 
                 className="w-full shadow-outset p-3 rounded-xl"
                 value={searchTerm}
                 onChange={(e) => onSearch(e.target.value)}
             />        
-            <div className="flex items-center flex-wrap gap-2">
+            <div className="flex items-center flex-wrap gap-1">
                 <Dropdown.Root>
                     <Dropdown.Trigger asChild>
                         <Button>
@@ -100,8 +100,8 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
                         <DropdownItem onSelect={() => setSort("Date")} icon={<Calendar/>} text="Release date"/>
                     </DropdownContent>
                 </Dropdown.Root>
-                { (hasEbook !== null || selectedSubjects.length > 0) && 
-                    <Button onClick={() => { setHasEbook(null); setSelectedSubjects([])}}>
+                { (hasEbook !== null || selectedSubjects.length > 0 || sort !== "Relevance") && 
+                    <Button onClick={() => { setHasEbook(null); setSelectedSubjects([]); setSort("Relevance")}}>
                         <ArrowCounterClockwise/> <p>Reset</p>
                     </Button>
                 }

@@ -10,7 +10,7 @@ export function searchBooks(term: string): Promise<Book[]> {
                 book.title, 
                 book.author_name?.join(", ") ?? "Unknown",
                 book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg` : null,
-                book.first_publish_year ?? 0,
+                book.first_publish_year ?? -1,
                 book.subject ?? [],
                 `https://openlibrary.org/works/${book.key}`,
                 book.ebook_count_i,
