@@ -5,7 +5,7 @@ export function DropdownContent({ children, align, onKeyDown }: { children: Reac
     return (
         <Dropdown.Content 
             align={align}
-            className="bg-white p-1 rounded-xl flex flex-col shadow-outset min-w-56"
+            className="bg-white p-1 rounded-xl flex flex-col shadow-outset min-w-56 z-20"
             onKeyDown={onKeyDown}
         >
             {children}

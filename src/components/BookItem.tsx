@@ -24,8 +24,48 @@ export function BookItem({ book, shelfLocation, onAddToShelf }: { book: Book, sh
                         <MinusCircle/>
                     </Button>
                 }
+                <BookItemDropdown shelfLocation={shelfLocation} onAddToShelf={onAddToShelf}/>
             </div>
-            <BookItemDropdown shelfLocation={shelfLocation} onAddToShelf={onAddToShelf}/>
+        </div>
+    )
+}
+
+export function BookItem2({ book, shelfLocation, onAddToShelf }: { book: Book, shelfLocation: ShelfLocation | null, onAddToShelf: (location: ShelfLocation | null) => void }) {
+    return (
+        <div className="flex flex-col gap-3">
+            <div className={
+                "flex flex-shrink-0 -skew-y-3 relative ml-3 my-3"
+                + " after:absolute after:-top-2 after:left-0 after:w-24 after:h-2 after:bg-neutral-50 after:border-t after:border-r after:border-neutral-300 after:skew-x-[45deg] after:origin-bottom-left after:rounded-tr-lg"
+            }>
+                <div className="z-10 backdrop-blur-sm absolute top-0 -left-2 w-2 h-full skew-y-[45deg] origin-bottom-right rounded-bl-lg border border-[rgba(0,0,0,.12)]"></div>
+                { book.image
+                    ? <img src={book.image} alt={book.title} className="absolute top-0 -left-2 w-2 h-full skew-y-[45deg] origin-bottom-right rounded-bl-lg border border-[rgba(0,0,0,.12)]"/>
+                    : <div className="absolute top-0 -left-2 w-2 h-full skew-y-[45deg] origin-bottom-right rounded-bl-lg border border-[rgba(0,0,0,.12)] bg-neutral-200"/>
+                }
+                { book.image 
+                    ? <img src={book.image} alt={book.title} className="w-24 h-40 object-cover rounded-br-md border border-l-0 border-[rgba(0,0,0,.12)]"/>
+                    : <div className="w-24 h-40 bg-neutral-200 rounded-br-md border border-l-0 border-[rgba(0,0,0,.12)"/>
+                }
+            </div>
+            <div className="flex">
+                <div className="flex flex-col flex-grow min-h-14 justify-center gap-1">
+                    <div>
+                        <p className="font-semibold">{book.title}</p>
+                        <p className="text-neutral-500">{book.author}</p>
+                    </div>
+                    <p className="text-sm text-neutral-500">
+                        {book.year >= 0 ? book.year : "Unknown"} • {(book.subject[0] ?? "Unknown") + (book.subject.length > 1 ? ` +${book.subject.length - 1}` : "")} • {`${book.ebooks} ebook${book.ebooks === 1 ? "" : "s"}`}
+                    </p>
+                </div>
+                <div className="flex flex-shrink-0">
+                    { shelfLocation !== null &&
+                        <Button onClick={() => onAddToShelf(null)} aria-label="Remove from bookshelf">
+                            <MinusCircle/>
+                        </Button>
+                    }
+                    <BookItemDropdown shelfLocation={shelfLocation} onAddToShelf={onAddToShelf}/>
+                </div>
+            </div>
         </div>
     )
 }

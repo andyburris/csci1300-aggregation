@@ -2,10 +2,10 @@ import { ArrowsDownUp, Calendar, ChartLineUp, FunnelSimple, TextAa, User } from 
 import * as Dropdown from "@radix-ui/react-dropdown-menu";
 import { useState } from "react";
 import { Book, ShelfLocation } from "../data/book";
-import { BookItem } from "./BookItem";
+import { BookItem, BookItem2 } from "./BookItem";
 import { Button } from "./Button";
 import { DropdownContent, DropdownItem } from "./Dropdown";
-import { ArrowCounterClockwise } from "@phosphor-icons/react";
+import { ArrowCounterClockwise, BookOpenText } from "@phosphor-icons/react";
 
 export interface DiscoveryListProps {
     books: Book[] | null;
@@ -55,36 +55,38 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
                         <Button>
                             <FunnelSimple/> 
                             <p>
-                                { (hasEbook !== null) && (hasEbook ? "Only ebooks, " : "Without ebooks, ") }
                                 <span className="text-neutral-900">{ selectedSubjects.length === 0 ? "All" : selectedSubjects.length} </span>
                                 { selectedSubjects.length === 1 ? "subject" : "subjects" }
                             </p>
                         </Button>
                     </Dropdown.Trigger>
                     <DropdownContent align="start">
-                        <Dropdown.Group>
-                            <Dropdown.Label className="p-3 text-neutral-500">Ebook</Dropdown.Label>
-                            <DropdownItem onSelect={() => setHasEbook(null)} text="All" isSelected={hasEbook == null}/>
-                            <DropdownItem onSelect={() => setHasEbook(true)} text="Yes" isSelected={hasEbook == true}/>
-                            <DropdownItem onSelect={() => setHasEbook(false)} text="No" isSelected={hasEbook == false}/>
-                        </Dropdown.Group>
-
-                        <Dropdown.Group>
-                            <Dropdown.Label className="p-3 text-neutral-500">Subject</Dropdown.Label>
-                            <DropdownItem
-                                onSelect={() => setSelectedSubjects([])}
-                                text="All"
-                                isSelected={selectedSubjects.length === 0}
-                                />
-                            { mostPopularSubjects.map((subject) => 
-                                <DropdownItem 
-                                    key={subject}
-                                    onSelect={() => setSelectedSubjects((prev) => prev.includes(subject) ? prev.filter((s) => s !== subject) : [...prev, subject])}
-                                    isSelected={selectedSubjects.includes(subject)}
-                                    text={subject}
-                                />
-                            )}
-                        </Dropdown.Group>
+                        <DropdownItem
+                            onSelect={() => setSelectedSubjects([])}
+                            text="All"
+                            isSelected={selectedSubjects.length === 0}
+                            />
+                        { mostPopularSubjects.map((subject) => 
+                            <DropdownItem 
+                                key={subject}
+                                onSelect={() => setSelectedSubjects((prev) => prev.includes(subject) ? prev.filter((s) => s !== subject) : [...prev, subject])}
+                                isSelected={selectedSubjects.includes(subject)}
+                                text={subject}
+                            />
+                        )}
+                    </DropdownContent>
+                </Dropdown.Root>
+                <Dropdown.Root>
+                    <Dropdown.Trigger asChild>
+                        <Button>
+                            <BookOpenText/> 
+                            <p> {hasEbook === null ? "Ebooks" : hasEbook ? "Only ebooks" : "Without ebooks" } </p>
+                        </Button>
+                    </Dropdown.Trigger>
+                    <DropdownContent align="start">
+                        <DropdownItem onSelect={() => setHasEbook(null)} text="All" isSelected={hasEbook == null}/>
+                        <DropdownItem onSelect={() => setHasEbook(true)} text="Yes" isSelected={hasEbook == true}/>
+                        <DropdownItem onSelect={() => setHasEbook(false)} text="No" isSelected={hasEbook == false}/>
                     </DropdownContent>
                 </Dropdown.Root>
                 <Dropdown.Root>
@@ -107,14 +109,16 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
                 }
             </div>
         </div>
-        { sortedBooks
-            ? sortedBooks.map((book) => <BookItem 
-                key={book.id} 
-                book={book} 
-                shelfLocation={currentShelf.get(book) ?? null}
-                onAddToShelf={(location) => onAddToShelf(book, location)}/>)
-            : <p>Loading...</p>
-        }
+        <div className="grid gap-4 grid-cols-1 xs:grid-cols-2 sm:grid-cols-3">
+            { sortedBooks
+                ? sortedBooks.map((book) => <BookItem2 
+                    key={book.id} 
+                    book={book} 
+                    shelfLocation={currentShelf.get(book) ?? null}
+                    onAddToShelf={(location) => onAddToShelf(book, location)}/>)
+                : <p>Loading...</p>
+            }
+        </div>
     </div>
 
     )
