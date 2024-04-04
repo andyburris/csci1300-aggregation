@@ -1,13 +1,12 @@
-import React, { Suspense, use, useEffect, useMemo, useState } from 'react';
-import logo from './logo.svg';
-import * as Tabs from "@radix-ui/react-tabs"
-import { Binoculars, Bookmark, Books, Disc } from '@phosphor-icons/react/dist/ssr';
-import { searchBooks } from './data/openlibrary';
-import { BookItem } from './components/BookItem';
-import { Book, ShelfLocation } from './data/book';
-import { useDebouncedValue } from './utils';
-import { DiscoveryList } from './components/DiscoveryList';
+import { Binoculars, Books } from '@phosphor-icons/react/dist/ssr';
+import * as Tabs from "@radix-ui/react-tabs";
+import React, { useEffect, useState } from 'react';
 import { Bookshelf } from './components/Bookshelf';
+import { DiscoveryList } from './components/DiscoveryList';
+import { Book, ShelfLocation } from './data/book';
+import { searchBooks } from './data/openlibrary';
+import logo from './logo.svg';
+import { useDebouncedValue } from './utils';
 
 function App() {
 	const [searchTerm, setSearchTerm] = useState("");

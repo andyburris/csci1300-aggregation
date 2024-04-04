@@ -1,6 +1,6 @@
-import { BookOpen, Bookmark, BookmarkSimple, Books, Check, ListHeart, ListPlus, MinusCircle } from "@phosphor-icons/react/dist/ssr"
-import { Book, ShelfLocation } from "../data/book"
+import { BookOpen, Bookmark, Books, ListHeart, MinusCircle } from "@phosphor-icons/react/dist/ssr"
 import * as Dropdown from "@radix-ui/react-dropdown-menu"
+import { Book, ShelfLocation } from "../data/book"
 import { Button } from "./Button"
 import { DropdownContent, DropdownItem } from "./Dropdown"
 

@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { ArrowsDownUp, Calendar, ChartLineUp, FunnelSimple, TextAa, User } from "@phosphor-icons/react/dist/ssr";
+import * as Dropdown from "@radix-ui/react-dropdown-menu";
+import { useState } from "react";
 import { Book, ShelfLocation } from "../data/book";
 import { BookItem } from "./BookItem";
-import { useDebouncedValue } from "../utils";
-import { searchBooks } from "../data/openlibrary";
 import { Button } from "./Button";
-import { ArrowsDownUp, BookOpenText, Calendar, ChartLineUp, FunnelSimple, TextAa, User } from "@phosphor-icons/react/dist/ssr";
-import * as Dropdown from "@radix-ui/react-dropdown-menu"
 import { DropdownContent, DropdownItem } from "./Dropdown";
 
 export interface DiscoveryListProps {
