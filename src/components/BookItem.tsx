@@ -14,6 +14,7 @@ export function BookItem({ book, shelfLocation, onAddToShelf }: { book: Book, sh
             <div className="flex flex-col flex-grow min-h-14 justify-center">
                 <p className="font-semibold">{book.title}</p>
                 <p className="text-neutral-500">{book.author}</p>
+                <p className="text-sm text-neutral-500">{book.year} • {(book.subject[0] ?? "Unknown") + (book.subject.length > 1 ? ` +${book.subject.length - 1}` : "")}</p>
             </div>
             <div className="flex flex-shrink-0">
                 { shelfLocation !== null &&
