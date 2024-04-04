@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Libre Caslon Condensed';
+    src: url('/public/LibreCaslonCondensed.ttf') format('truetype');
+}
