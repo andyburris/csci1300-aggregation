@@ -25,8 +25,11 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
         .slice(0, 5)
         .map(([subject, count]) => subject);
     const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
-    const filteredBooks = selectedSubjects.length > 0 ? books?.filter((book) => selectedSubjects.some((subject) => book.subject.includes(subject))) : books;
-
+    const [hasEbook, setHasEbook] = useState<boolean | null>(null);
+    const filteredBooks = books?.filter((book) => 
+        (selectedSubjects.length === 0 || selectedSubjects.some((subject) => book.subject.includes(subject)))
+        && (hasEbook === null || book.ebook === hasEbook)
+    ) 
     const [sort, setSort] = useState<"Relevance" | "Title" | "Author" | "Date">("Relevance")
     const sortedBooks = filteredBooks?.toSorted((a: Book, b: Book) => {
         if(sort === "Relevance") return 0;
@@ -51,25 +54,36 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
                         <Button>
                             <FunnelSimple/> 
                             <p>
+                                { (hasEbook !== null) && (hasEbook ? "Only ebooks, " : "Without ebooks, ") }
                                 <span className="text-neutral-900">{ selectedSubjects.length === 0 ? "All" : selectedSubjects.length} </span>
                                 { selectedSubjects.length === 1 ? "subject" : "subjects" }
                             </p>
                         </Button>
                     </Dropdown.Trigger>
                     <DropdownContent align="start">
-                        <DropdownItem
-                            onSelect={() => setSelectedSubjects([])}
-                            text="All"
-                            isSelected={selectedSubjects.length === 0}
-                            />
-                        { mostPopularSubjects.map((subject) => 
-                            <DropdownItem 
-                                key={subject}
-                                onSelect={() => setSelectedSubjects((prev) => prev.includes(subject) ? prev.filter((s) => s !== subject) : [...prev, subject])}
-                                isSelected={selectedSubjects.includes(subject)}
-                                text={subject}
-                            />
-                        )}
+                        <Dropdown.Group>
+                            <Dropdown.Label className="p-3 text-neutral-500">Ebook</Dropdown.Label>
+                            <DropdownItem onSelect={() => setHasEbook(null)} text="All" isSelected={hasEbook == null}/>
+                            <DropdownItem onSelect={() => setHasEbook(true)} text="Yes" isSelected={hasEbook == true}/>
+                            <DropdownItem onSelect={() => setHasEbook(false)} text="No" isSelected={hasEbook == false}/>
+                        </Dropdown.Group>
+
+                        <Dropdown.Group>
+                            <Dropdown.Label className="p-3 text-neutral-500">Subject</Dropdown.Label>
+                            <DropdownItem
+                                onSelect={() => setSelectedSubjects([])}
+                                text="All"
+                                isSelected={selectedSubjects.length === 0}
+                                />
+                            { mostPopularSubjects.map((subject) => 
+                                <DropdownItem 
+                                    key={subject}
+                                    onSelect={() => setSelectedSubjects((prev) => prev.includes(subject) ? prev.filter((s) => s !== subject) : [...prev, subject])}
+                                    isSelected={selectedSubjects.includes(subject)}
+                                    text={subject}
+                                />
+                            )}
+                        </Dropdown.Group>
                     </DropdownContent>
                 </Dropdown.Root>
                 <Dropdown.Root>

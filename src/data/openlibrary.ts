@@ -11,7 +11,10 @@ export function searchBooks(term: string): Promise<Book[]> {
                 book.author_name?.join(", ") ?? "Unknown",
                 book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg` : null,
                 book.first_publish_year ?? 0,
-                book.subject ?? [])))
+                book.subject ?? [],
+                `https://openlibrary.org/works/${book.key}`,
+                book.ebook_count_i > 0,
+            )))
 }
 
 // export function getBooks(ids: string[]): Promise<Book[]> {

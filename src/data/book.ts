@@ -6,6 +6,8 @@ export class Book{
         public image: string | null,
         public year: number,
         public subject: string[],
+        public link: string,
+        public ebook: boolean,
     ) {}
 }
 
