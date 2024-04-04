@@ -22,7 +22,7 @@ export function Bookshelf({ books, onAddToShelf }: { books: Map<Book, ShelfLocat
                 { toRead.map((book) => <BookItem key={book.id} book={book} shelfLocation={ShelfLocation.ToRead} onAddToShelf={(location) => onAddToShelf(book, location)}/>) }
             </div>
             <div className="flex flex-col gap-4">
-                <p className="text-neutral-500">Read</p>
+                <p className="text-neutral-500">Already Read</p>
                 { read.map((book) => <BookItem key={book.id} book={book} shelfLocation={ShelfLocation.Read} onAddToShelf={(location) => onAddToShelf(book, location)}/>) }
             </div>
         </div>

@@ -4,6 +4,8 @@ export class Book{
         public title: string,
         public author: string,
         public image: string | null,
+        public year: number,
+        public subject: string[],
     ) {}
 }
 

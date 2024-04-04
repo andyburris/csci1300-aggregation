@@ -1,5 +1,8 @@
-import { BookOpen, Bookmark, BookmarkSimple, Books } from "@phosphor-icons/react/dist/ssr"
+import { BookOpen, Bookmark, BookmarkSimple, Books, Check, ListHeart, ListPlus, MinusCircle } from "@phosphor-icons/react/dist/ssr"
 import { Book, ShelfLocation } from "../data/book"
+import * as Dropdown from "@radix-ui/react-dropdown-menu"
+import { Button } from "./Button"
+import { DropdownContent, DropdownItem } from "./Dropdown"
 
 export function BookItem({ book, shelfLocation, onAddToShelf }: { book: Book, shelfLocation: ShelfLocation | null, onAddToShelf: (location: ShelfLocation | null) => void }) {
     return (
@@ -13,24 +16,48 @@ export function BookItem({ book, shelfLocation, onAddToShelf }: { book: Book, sh
                 <p className="text-neutral-500">{book.author}</p>
             </div>
             <div className="flex flex-shrink-0">
-                <button 
-                    className="text-neutral-500 hover:text-neutral-900 size-10 flex items-center justify-center hover:bg-neutral-50 rounded-lg text-xl"
-                    onClick={() => onAddToShelf(shelfLocation === ShelfLocation.ToRead ? null : ShelfLocation.ToRead)}
+                { shelfLocation !== null &&
+                    <Button onClick={() => onAddToShelf(null)}>
+                        <MinusCircle/>
+                    </Button>
+                }
+                <Dropdown.Root>
+                    <Dropdown.Trigger asChild>
+                        <Button aria-label="Add to bookshelf">
+                            <ListHeart/>
+                        </Button>
+                    </Dropdown.Trigger>
+                    <DropdownContent 
+                        align="end" 
+                        onKeyDown={(e) => {
+                            if(e.key === "A") onAddToShelf(ShelfLocation.Read)
+                            if(e.key === "R") onAddToShelf(ShelfLocation.Reading)
+                            if(e.key === "T") onAddToShelf(ShelfLocation.ToRead)
+                        }}
                     >
-                    <BookmarkSimple weight={shelfLocation === ShelfLocation.ToRead ? "fill" : "regular"}/>
-                </button>
-                <button 
-                    className="text-neutral-500 hover:text-neutral-900 size-10 flex items-center justify-center hover:bg-neutral-50 rounded-lg text-xl"
-                    onClick={() => onAddToShelf(shelfLocation === ShelfLocation.Reading ? null : ShelfLocation.Reading)}
-                    >
-                    <BookOpen weight={shelfLocation === ShelfLocation.Reading ? "fill" : "regular"}/>
-                </button>
-                <button 
-                    className="text-neutral-500 hover:text-neutral-900 size-10 flex items-center justify-center hover:bg-neutral-50 rounded-lg text-xl"
-                    onClick={() => onAddToShelf(shelfLocation === ShelfLocation.Read ? null : ShelfLocation.Read)}
-                    >
-                    <Books weight={shelfLocation === ShelfLocation.Read ? "fill" : "regular"}/>
-                </button>
+                        <DropdownItem 
+                            onSelect={() => onAddToShelf(ShelfLocation.Reading)}
+                            isSelected={shelfLocation === ShelfLocation.Reading}
+                            icon={<BookOpen/>}
+                            text="Reading"
+                            shortcut="R"
+                            />
+                        <DropdownItem 
+                            onSelect={() => onAddToShelf(ShelfLocation.ToRead)}
+                            isSelected={shelfLocation === ShelfLocation.ToRead}
+                            icon={<Bookmark/>}
+                            text="To Read"
+                            shortcut="T"
+                            />
+                        <DropdownItem 
+                            onSelect={() => onAddToShelf(ShelfLocation.Read)}
+                            isSelected={shelfLocation === ShelfLocation.Read}
+                            icon={<Books/>}
+                            text="Already Read"
+                            shortcut="A"
+                            />
+                    </DropdownContent>
+                </Dropdown.Root>
             </div>
         </div>
     )
