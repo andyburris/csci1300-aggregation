@@ -75,7 +75,7 @@ function BookItemDropdown({ shelfLocation, onAddToShelf }: { shelfLocation: Shel
         <Dropdown.Root>
         <Dropdown.Trigger asChild>
             <Button aria-label="Add to bookshelf">
-                <ListHeart/>
+                <ListHeart weight={ shelfLocation ? "fill" : "regular" }/>
             </Button>
         </Dropdown.Trigger>
         <DropdownContent 
