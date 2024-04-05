@@ -42,17 +42,17 @@ function App() {
 		<main className="max-w-3xl mx-auto">
 			<header className="flex flex-col gap-2 py-3">
 				<div className="size-8 flex items-center justify-center bg-neutral-100 text-neutral-500 rounded-lg">
-					<img src={logo} alt="logo"/>
+					<img src={logo} alt="Already logo"/>
 				</div>
 				<div className="flex flex-col">
-					<p className="text-3xl font-displaySerif tracking-tight font-semibold">Already</p>
+					<h1 className="text-3xl font-displaySerif tracking-tight font-semibold">Already</h1>
 					<p className="text-neutral-500">A super simple reading list</p>
 				</div>
 			</header>
 			<Tabs.Root defaultValue="discover" className="">
 				<Tabs.List className="flex -mx-4 overflow-x-scroll border-b border-neutral-300 pb-px">
 					<TabTrigger value="discover"><Binoculars/>Discover</TabTrigger>
-					<TabTrigger value="bookshelf"><Books/>Bookshelf <div className="text-neutral-500 bg-neutral-100 px-1 text-base rounded-full">{shelf.size}</div></TabTrigger>
+					<TabTrigger value="bookshelf"><Books/>Bookshelf <div className="text-neutral-700 bg-neutral-100 px-1 text-base rounded-full">{shelf.size}</div></TabTrigger>
 				</Tabs.List>
 				<Tabs.Content value="discover" className="py-4">
 					<div className="flex flex-col gap-4">

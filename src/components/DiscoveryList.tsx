@@ -48,6 +48,7 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
                 className="w-full shadow-outset p-3 rounded-xl"
                 value={searchTerm}
                 onChange={(e) => onSearch(e.target.value)}
+                aria-label="Search for books"
             />        
             <div className="flex items-center flex-wrap gap-1">
                 <Dropdown.Root>
