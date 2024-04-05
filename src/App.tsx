@@ -3,7 +3,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import React, { useEffect, useState } from 'react';
 import { Bookshelf } from './components/Bookshelf';
 import { DiscoveryList } from './components/DiscoveryList';
-import { Book, ShelfLocation } from './data/book';
+import { Book, BookWithLocation, ShelfLocation } from './data/book';
 import { searchBooks } from './data/openlibrary';
 import logo from './logo.svg';
 import { useDebouncedValue } from './utils';
@@ -18,17 +18,17 @@ function App() {
     }, [debouncedSearchTerm]);
 
 
-	const [shelf, setShelf] = React.useState<Map<Book, ShelfLocation>>(new Map());
+	const [shelf, setShelf] = React.useState<Map<string, BookWithLocation>>(new Map());
 
-	const updateShelf = (book: Book, location: ShelfLocation | null) => {
-		if(location === null) {
+	const updateShelf = (book: BookWithLocation) => {
+		if(book.location === null) {
 			setShelf((prev) => {
 				const copy = new Map(prev);
-				copy.delete(book);
+				copy.delete(book.id);
 				return copy;
 			})
 		} else {
-			setShelf((prev) => new Map(prev).set(book, location));
+			setShelf((prev) => new Map(prev).set(book.id, book));
 		}
 	}
 

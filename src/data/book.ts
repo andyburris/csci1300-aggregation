@@ -1,3 +1,7 @@
+export interface BookWithLocation extends Book {
+    location: ShelfLocation | null;
+}
+
 export class Book{
     public constructor(
         public id: string,

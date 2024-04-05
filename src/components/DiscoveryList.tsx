@@ -1,7 +1,7 @@
 import { ArrowsDownUp, Calendar, ChartLineUp, FunnelSimple, TextAa, User } from "@phosphor-icons/react/dist/ssr";
 import * as Dropdown from "@radix-ui/react-dropdown-menu";
 import { useState } from "react";
-import { Book, ShelfLocation } from "../data/book";
+import { Book, BookWithLocation, ShelfLocation } from "../data/book";
 import { BookItem, BookItem2 } from "./BookItem";
 import { Button } from "./Button";
 import { DropdownContent, DropdownItem } from "./Dropdown";
@@ -10,8 +10,8 @@ import { ArrowCounterClockwise, BookOpenText } from "@phosphor-icons/react";
 export interface DiscoveryListProps {
     books: Book[] | null;
     searchTerm: string;
-    currentShelf: Map<Book, ShelfLocation>;
-    onAddToShelf: (book: Book, location: ShelfLocation | null) => void;
+    currentShelf: Map<string, BookWithLocation>;
+    onAddToShelf: (book: BookWithLocation) => void;
     onSearch: (term: string) => void;
 }
 
@@ -115,8 +115,8 @@ export function DiscoveryList({ books, searchTerm, currentShelf, onAddToShelf, o
                 ? sortedBooks.map((book) => <BookItem2 
                     key={book.id} 
                     book={book} 
-                    shelfLocation={currentShelf.get(book) ?? null}
-                    onAddToShelf={(location) => onAddToShelf(book, location)}/>)
+                    shelfLocation={currentShelf.get(book.id)?.location ?? null}
+                    onAddToShelf={(location) => onAddToShelf({ ...book, location })}/>)
                 : <p>Loading...</p>
             }
         </div>
