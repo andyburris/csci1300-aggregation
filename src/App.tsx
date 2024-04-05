@@ -18,18 +18,16 @@ function App() {
     }, [debouncedSearchTerm]);
 
 
-	const [shelf, setShelf] = React.useState<Map<string, BookWithLocation>>(new Map());
+	const [shelf, setShelf] = React.useState<Map<string, BookWithLocation>>(localStorage["shelf"] ? new Map(JSON.parse(localStorage["shelf"])) : new Map());
 
 	const updateShelf = (book: BookWithLocation) => {
-		if(book.location === null) {
-			setShelf((prev) => {
-				const copy = new Map(prev);
-				copy.delete(book.id);
-				return copy;
-			})
-		} else {
-			setShelf((prev) => new Map(prev).set(book.id, book));
-		}
+		setShelf((prev) => {
+			const copy = new Map(prev);
+			if(book.location === null) copy.delete(book.id);
+			else copy.set(book.id, book);
+			localStorage["shelf"] = JSON.stringify(Array.from(copy.entries()));
+			return copy;
+		});	
 	}
 
 	const discoveryList = <DiscoveryList 
